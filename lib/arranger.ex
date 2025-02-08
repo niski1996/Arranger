@@ -2,6 +2,7 @@ defmodule Arranger do
   @moduledoc """
   Documentation for `Arranger`.
   """
+alias Ecto.Repo.Supervisor
 
   @doc """
   Hello world.
@@ -13,6 +14,13 @@ defmodule Arranger do
 
   """
   def hello do
+    IO.puts("Hello, world!")  # Wypisuje na konsolę
     :world
+  end
+
+  def main(_type, _args) do
+    children= [Arranger.Repo]
+    opts =[strategy: :one_for_one, name: Arranger.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
