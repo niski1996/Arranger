@@ -20,18 +20,26 @@ defmodule Arranger.Repo.Migrations.CreateBaseTables do
     end
 
     create table(:classCourse) do
-      add classId, references(:class, on_delete: :delete_all)
-      add courseId, references(:course, on_delete: :delete_all)
+      add :classId, references(:class, on_delete: :delete_all)
+      add :courseId, references(:course, on_delete: :delete_all)
       timestamps()
+    end
+
+    create table(:courseInstructor) do
+      add :instructorId, references(:instructor, on_delete: :delete_all)  # Poprawiona literówka
+      add :courseId, references(:course, on_delete: :delete_all)
     end
 
     create table(:lesson) do
-      add :courseId, refernces(:course, on_delete: :delete_all)
-      add :classroomId, refernces(:classroom, on_delete: :delete_all)
-      add :instructorId, refernces(:instructor, on_delete: :delete_all)
-      add :classId, refernces(:class, on_delete: :delete_all)
+      add :courseId, references(:course, on_delete: :delete_all)
+      add :classroomId, references(:classroom, on_delete: :delete_all)
+      add :instructorId, references(:instructor, on_delete: :delete_all)
+      add :classId, references(:class, on_delete: :delete_all)
       timestamps()
     end
 
+    create unique_index(:course, [:code])
+    create unique_index(:class, [:code])
+    create unique_index(:classroom, [:code])
   end
 end
